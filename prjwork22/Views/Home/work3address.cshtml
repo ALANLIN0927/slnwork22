@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "work3address";
+}
+
+<h1>work3線市區路名</h1>
+
+<select id="selectregion"></select>
+<select id="selectarea"></select>
+<select id="selectroad"></select>
+
+@section Scripts{
+    <script>
+        const selregion =document.querySelector('#selectregion')
+        const selrea = document.querySelector('#selectarea')
+        const selroad =document.querySelector('#selectroad')
+
+        selregion.addEventListener('change',()=>loadarea());
+        selrea.addEventListener('change', () => selroad());
+       
+        loadRegion();
+        async function loadRegion(){
+
+            const response =await fetch("@Url.Content("~/api/Region")");
+            const datas =await response.json();
+            const regionOpts=datas.map(value =>`<option value=${value}>${value}</option>`)
+            selregion.innerHTML=regionOpts.join("");
+            loadarea();
+        }
+        async function loadarea(){
+            const region =selregion.options[selregion.selectedIndex].value;
+            const response=await fetch(`@Url.Content("~/api/area?region=${region}")`);
+            const datas= await response.json();
+            const areaOpts = datas.map(value => `<option value=${value}>${value}</option>`)
+            selrea.innerHTML=areaOpts.join("");
+            loadroad();
+
+        }
+        async function loadroad(){
+            const area=selrea.options[selrea.selectedIndex].value;
+            const response = await fetch(`@Url.Content("~/api/road?area=${area}")`);
+            const datas= await response.json();
+            const roadOpts = datas.map(value => `<option value=${value}>${value}</option>`)
+            selroad.innerHTML=roadOpts.join("");
+
+        }
+
+
+
+
+
+
+    </script>
+
+
+
+
+}

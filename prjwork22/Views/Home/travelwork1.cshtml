@@ -1,0 +1,81 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@section Style{
+    <style>
+        h1 {
+            background-color: red;
+        }
+
+        .wrap {
+            width: 1500px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        div {
+            width: 300px;
+        }
+    </style>
+
+
+}
+    <span>搜尋關鍵字</span>
+    <input type="text" id="selecttxt" />
+    <div class="wrap"></div>
+
+    @section Scripts{
+    <script src="~/js/travel.js"></script>
+    <script>
+        const txt = document.querySelector('#selecttxt');
+
+        txt.addEventListener('blur', () => {                //keyup   //blur不會一個字就晃一次
+            const result = DATAS.filter(_data => _data.Name.indexOf(txt.value) !== -1);
+            show(result);
+        });
+
+
+        show(DATAS);
+        function show(data) {
+            const divv =document.querySelector('.wrap');
+            divv.innerHTML="";
+
+            for (let i = 0, max = data.length; i < max; i++) {
+
+                let card = document.createElement('div');
+                card.className = 'card text-center';
+
+                document.querySelector('.wrap').appendChild(card);
+
+                let cardHead = document.createElement('div');
+                cardHead.className = 'card-header';
+                let cardheadtxt = document.createTextNode(data[i].Name);
+                cardHead.appendChild(cardheadtxt);
+                card.appendChild(cardHead);
+
+                let cardBody = document.createElement('div');
+                cardBody.className = 'card-body';
+                let cardBodytxt = document.createTextNode(data[i].Toldescribe);
+                cardBody.appendChild(cardBodytxt);
+                card.appendChild(cardBody);
+
+                let cardfooter = document.createElement('div');
+                cardfooter.className = 'card-footer text-muted';
+                let cardfootertxt = document.createTextNode(data[i].Ticketinfo);
+
+                cardfooter.appendChild(cardfootertxt);
+                card.appendChild(cardfooter);
+            }
+            console.log(data.length);
+        }
+
+    </script>
+
+
+
+
+
+
+}

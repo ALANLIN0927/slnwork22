@@ -1,0 +1,86 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@section Style{
+    <style>
+        span{
+            color:red;
+            font-size:50px;
+        }
+
+
+
+
+    </style>
+
+
+}
+<h1>註冊</h1>
+<form method="post" name="userForm" class="w-50">
+    <div class="mb-3">
+        <label for="name" class="form-label">姓名</label>
+        <input type="text" class="form-control" id="name" name="name">
+    </div>
+    <span id="span">判斷姓名是否存在</span>
+    <div class="mb-3">
+        <label for="email" class="form-label">電子郵件</label>
+        <input type="email" class="form-control" id="eamil" name="email">
+    </div>
+   
+    @*<div class="mb-3">
+        <label for="age" class="form-label">年紀</label>
+        <input type="text" class="form-control" id="age" name="age">
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">照片</label>
+        <input class="form-control" type="file" id="formFile" name="photo">
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary mb-3">送出</button>
+    </div>*@
+
+</form>
+<div id="div1"></div>
+
+@section Scripts{
+    <script>
+        const btn = document.querySelector('button[type="submit"]');
+        const txt = document.querySelector('#name');
+        const divshow = document.querySelector('#div1');
+        const span1 = document.querySelector('#span');
+        txt.addEventListener('blur', async () => {
+            //todo 檢查有沒有輸入
+            console.log(txt.value);
+            const response = await fetch(`@Url.Content("~/api/check?name=${txt.value}")`);
+            const data = await response.text();
+            //todo 根據True or False 決定要顯示的內容
+           
+              span1.innerHTML=data.toString();                      //對錯顯示在這裡!
+          
+        })
+        //btn.addEventListener("click", async (event) => {
+        //    event.preventDefault(); //停止submit預設的行為
+
+        //    const formData = new FormData(document.userForm);
+        //    //    fetch(url,{})
+        //    const response = await fetch("@Url.Content("/api/register")", {
+        //        method: "POST",
+        //        body: formData
+        //    });
+        //    const data = await response.text();
+        //    document.querySelector('#div1').innerHTML = data;
+
+
+            
+
+
+
+
+
+        //})
+
+    </script>
+
+}
